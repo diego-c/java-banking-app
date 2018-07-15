@@ -1,3 +1,5 @@
+package src.main.java;
+
 import org.javamoney.moneta.Money;
 
 public interface Conta {

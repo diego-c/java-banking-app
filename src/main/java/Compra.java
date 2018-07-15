@@ -1,3 +1,5 @@
+package src.main.java;
+
 import org.javamoney.moneta.Money;
 
 import java.time.LocalDateTime;

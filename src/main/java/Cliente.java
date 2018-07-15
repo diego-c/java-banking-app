@@ -1,3 +1,5 @@
+package src.main.java;
+
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.UUID;
@@ -11,24 +13,15 @@ public class Cliente {
     private Conta[] contas;
 
     public static boolean validarNome(String nome) {
-        if (!nome.matches("^[A-Z]{2,}.")) {
-            return false;
-        }
-        return true;
+        return nome.matches("^[A-Z]{2,}.");
     }
 
     public static boolean validarEmail(String email) {
-        if (!email.matches("^\\w+@\\w+\\.\\w+$")) {
-            return false;
-        }
-        return true;
+        return email.matches("^\\w+@\\w+\\.\\w+$");
     }
 
     public static boolean validarTelefone(String telefone) {
-        if (!telefone.matches("^\\([0-9]{2}\\)[0-9]{9}$")) {
-            return false;
-        }
-        return true;
+        return telefone.matches("^\\([0-9]{2}\\)[0-9]{9}$");
     }
 
     public Cliente(String nome, String email, String telefone) {

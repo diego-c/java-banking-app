@@ -1,3 +1,5 @@
+package src.test.java;
+
 import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.Test;
 

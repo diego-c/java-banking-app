@@ -1,3 +1,5 @@
+package src.main.java;
+
 public interface Comandos {
     void iniciar();
     int telaInicial();
