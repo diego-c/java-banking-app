@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 
 public class DB {
@@ -36,43 +38,8 @@ public class DB {
         }
         return connection;
     }
-    public static boolean insertUser(String nome, String email, String telefone, String senha) {
-        Connection connection = connectToDB();
-        String salt = loadProperty("password_salt");
-        StringBuilder passwordHash = new StringBuilder(512);
-        if (salt != null) {
-            passwordHash.append(Password.hashPassword(senha, salt));
 
-            if (connection != null) {
-                String sql = "INSERT INTO usuarios(nome, email, telefone, senha, contas) VALUES (?, ?, ?, ?, ?)";
-                Array contasArray = null;
-                try {
-                    contasArray = connection.createArrayOf("contas", new Contas[] { Contas.BASICA, null });
-
-                    PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                    preparedStatement.setString(1, nome);
-                    preparedStatement.setString(2, email);
-                    preparedStatement.setString(3, telefone);
-                    preparedStatement.setString(4, passwordHash.toString());
-                    preparedStatement.setArray(5, contasArray);
-
-                    preparedStatement.execute();
-                    preparedStatement.close();
-                    System.out.println("User added to DB!");
-                    connection.close();
-                    return true;
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                System.out.println("Could not connect to DB");
-            }
-        } else {
-            System.out.println("Could not load salt");
-        }
-        return false;
-    }
-    private static String loadProperty(String prop) {
+    public static String loadProperty(String prop) {
         Properties props = new Properties();
         BufferedReader reader = null;
 
