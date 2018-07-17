@@ -12,11 +12,13 @@ import java.util.UUID;
 
 public class ContaBasica implements Conta {
     private UUID ID;
+    private Contas tipo;
     private Money saldo;
     private List<Fatura> faturas;
     private static final Money LIMITE = Money.of(500, "BRL");
 
     public ContaBasica(Money saldo) {
+        this.tipo = Contas.BASICA;
         this.ID = UUID.randomUUID();
         this.saldo = saldo;
         this.faturas = new ArrayList<>();

@@ -1,16 +1,21 @@
 package src.main.java;
 
+import org.javamoney.moneta.Money;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+
 public class Main {
     public static void main(String[] args) {
         /*CLI cli = CLI.getInstance();
         cli.iniciar();*/
-        ClienteBean cliente = new ClienteBean();
-        cliente.setNome("DIEGO_TEST");
-        cliente.setEmail("whatever@gmail.com");
-        cliente.setTelefone("(75)999999999");
-        cliente.setSenha("123456");
+        CompraBean compra = new CompraBean();
+        compra.setHorário(LocalDateTime.now(ZoneId.ofOffset("GMT", ZoneOffset.ofHours(-3))));
+        compra.setEstabelecimento("Extra");
+        compra.setValor(Money.of(23.52, "BRL"));
 
-        ClienteDAO dao = new ClienteDAO();
-        dao.insertUser(cliente);
+        CompraDAO compraDAO = new CompraDAO();
+        compraDAO.insertCompra(compra);
     }
 }
