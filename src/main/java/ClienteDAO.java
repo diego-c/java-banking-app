@@ -1,9 +1,7 @@
 package src.main.java;
 
-import java.sql.Array;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.UUID;
 
 public class ClienteDAO {
     private Connection connection;
@@ -46,5 +44,38 @@ public class ClienteDAO {
             System.out.println("Could not load salt");
         }
         return false;
+    }
+
+    public void findClientePorNome(String nome) {
+        if (connection != null) {
+            String sql = "SELECT * FROM usuarios WHERE LOWER(nome) LIKE ?";
+            try {
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setString(1, nome);
+
+                ResultSet rs = statement.executeQuery();
+                System.out.println("Usuários encontrados:\n");
+                while (rs.next()) {
+                    UUID ID = (UUID) rs.getObject("id");
+                    String nomeEncontrado = rs.getString("nome");
+                    String email = rs.getString("email");
+                    String telefone = rs.getString("telefone");
+                    String senha = rs.getString("senha");
+
+                    System.out.println("ID: " + ID.toString());
+                    System.out.println("Nome: " + nomeEncontrado);
+                    System.out.println("Email: " + email);
+                    System.out.println("Telefone: " + telefone);
+                    System.out.println("Senha: " + senha + "\n");
+                }
+                rs.close();
+                statement.close();
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Não foi possível estabelecer uma conexão com o BD");
+        }
     }
 }
